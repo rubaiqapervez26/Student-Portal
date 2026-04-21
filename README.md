@@ -36,7 +36,7 @@ This project uses a "Serverless" front-end approach, relying on browser storage 
 4.  **Feedback:** Visit the feedback page to submit a rating and see the UI update.
 
 ## 👨‍🏫 Supervision & Author
-* **Student:** Rubaiqa
+* **Author/ Student:** Rubaiqa Pervez
 * **Supervisor:** **Sir Qadeer Yaseen**
 * **Course:** Web Engineering Lab (CYS-463L)
 * **Institution:** University of Wah
