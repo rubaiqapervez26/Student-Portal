@@ -29,9 +29,27 @@
     .navbar {
       background-color: var(--dark-blue) !important;
       border-bottom: 4px solid var(--accent-orange);
+      padding: 15px 0;
     }
 
-    /* 2. THE BOX EFFECT (Standardized Page Size) */
+    .nav-link {
+      font-weight: 500;
+      transition: color 0.3s;
+      margin-left: 10px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .nav-link:hover {
+      color: var(--accent-orange) !important;
+    }
+
+    .nav-link.active {
+      color: var(--gold) !important;
+    }
+
+    /* 2. THE BOX EFFECT */
     .page-wrapper {
       flex: 1;
       display: flex;
@@ -43,7 +61,7 @@
     .main-card {
       background: white;
       width: 100%;
-      max-width: 1100px; /* Standardized width across your portal */
+      max-width: 1100px; 
       display: flex;
       box-shadow: 0 15px 35px rgba(0,0,0,0.1);
       min-height: 600px;
@@ -83,15 +101,6 @@
 
     .btn-get-started:hover { color: white; opacity: 0.9; }
 
-    .btn-dashboard { 
-      border: 2px solid var(--dark-blue); 
-      color: var(--dark-blue); 
-      padding: 15px 30px; 
-      background: none; 
-      font-weight: bold;
-      width: 100%;
-    }
-
     /* FEATURE GRID IN RIGHT PANEL */
     .feature-item {
       padding: 15px;
@@ -117,6 +126,10 @@
       text-align: center;
     }
 
+    @media (max-width: 992px) {
+      .nav-link { margin-left: 0; padding: 10px 0; }
+    }
+
     @media (max-width: 850px) {
       .main-card { flex-direction: column; }
       .left-side, .right-side { padding: 40px; }
@@ -125,10 +138,33 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
       <a class="navbar-brand fw-bold" href="index.html">STUDENT<span style="color:var(--accent-orange)">PORTAL</span></a>
-      <span class="text-white small d-none d-md-block">UNIVERSITY OF WAH | SPRING 2026</span>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#studentNavbar" aria-controls="studentNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="studentNavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="registration.html">Registration</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard.html">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="courses.html">Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="feedback.html">Feedback</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
@@ -188,8 +224,11 @@
 
   <footer>
     <p class="mb-0 fw-bold">StudentPortal</p>
+    <p class="small text-muted mb-0">UNIVERSITY OF WAH | SPRING 2026</p>
     <p class="small text-muted mb-0">CYS-463L • Web Engineering Lab</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
