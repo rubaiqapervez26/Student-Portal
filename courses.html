@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Portal - Courses</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  
+  <style>
+    /* 1. THEME COLORS & LAYOUT */
+    :root {
+      --dark-blue: #0d1117;
+      --accent-orange: #e8471d;
+      --bg-gray: #f0f0f0;
+      --gold: #f5c842;
+    }
+
+    body {
+      background-color: var(--bg-gray);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      background-color: var(--dark-blue) !important;
+      border-bottom: 4px solid var(--accent-orange);
+    }
+
+    /* 2. THE BOX EFFECT (Like your image) */
+    .page-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .main-card {
+      background: white;
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    /* 3. PANEL STYLING */
+    .left-side {
+      background-color: var(--dark-blue);
+      color: white;
+      flex: 1;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-side {
+      flex: 1.2;
+      padding: 50px;
+      background-color: white;
+      overflow-y: auto;
+    }
+
+    /* 4. COURSE SELECTION STYLING */
+    .course-card {
+      background: #fcfcfc;
+      border: 2px solid #eee;
+      padding: 15px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .course-card:hover {
+      border-color: var(--accent-orange);
+      transform: translateX(5px);
+    }
+
+    .course-card.selected {
+      border-color: var(--accent-orange);
+      background-color: #fff8f6;
+    }
+
+    .checkmark {
+      float: right;
+      color: var(--accent-orange);
+      font-weight: bold;
+      display: none;
+    }
+
+    .course-card.selected .checkmark {
+      display: inline;
+    }
+
+    .btn-submit {
+      background-color: var(--accent-orange);
+      color: white;
+      width: 100%;
+      padding: 15px;
+      font-weight: bold;
+      border: none;
+      margin-top: 20px;
+      text-transform: uppercase;
+    }
+
+    .btn-submit:disabled {
+      background-color: #ccc;
+    }
+
+    .count-badge {
+      background: var(--gold);
+      color: var(--dark-blue);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    @media (max-width: 768px) {
+      .main-card { flex-direction: column; }
+      .left-side { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">STUDENT<span style="color:var(--accent-orange)">PORTAL</span></a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="main-card">
+    
+    <div class="left-side">
+      <p style="color: var(--accent-orange); letter-spacing: 2px; font-weight: bold;">UNIVERSITY OF WAH</p>
+      <h1 class="display-5 fw-bold">Select Your <br><span style="color: var(--gold);">Courses.</span></h1>
+      <p class="text-secondary mt-3">Choose the subjects you wish to enroll in for the Spring 2026 semester.</p>
+      <div class="mt-4">
+        <span class="count-badge" id="selCount">0 Courses Selected</span>
+      </div>
+    </div>
+
+    <div class="right-side">
+      <h2 class="fw-bold mb-1">Available Courses</h2>
+      <p class="text-muted mb-4 small">Click to select or deselect subjects.</p>
+
+      <div id="courseContainer">
+        <div class="course-card" onclick="toggleCourse(this, 'Web Engineering')">
+          <span class="checkmark">✓ Selected</span>
+          <h6 class="fw-bold mb-1">Web Engineering</h6>
+          <p class="text-muted small mb-0">Learn full-stack development using HTML, CSS, and JS.</p>
+        </div>
+
+        <div class="course-card" onclick="toggleCourse(this, 'Artificial Intelligence')">
+          <span class="checkmark">✓ Selected</span>
+          <h6 class="fw-bold mb-1">Artificial Intelligence</h6>
+          <p class="text-muted small mb-0">Neural networks and machine learning basics.</p>
+        </div>
+
+        <div class="course-card" onclick="toggleCourse(this, 'Database Systems')">
+          <span class="checkmark">✓ Selected</span>
+          <h6 class="fw-bold mb-1">Database Systems</h6>
+          <p class="text-muted small mb-0">SQL and Relational Database Management.</p>
+        </div>
+
+        <div class="course-card" onclick="toggleCourse(this, 'Network Security')">
+          <span class="checkmark">✓ Selected</span>
+          <h6 class="fw-bold mb-1">Network Security</h6>
+          <p class="text-muted small mb-0">Encryption and securing digital assets.</p>
+        </div>
+      </div>
+
+      <button id="enrollBtn" class="btn-submit" disabled onclick="submitEnrolment()">ENROLL NOW</button>
+      
+      <div class="mt-3 text-center">
+          <a href="dashboard.html" class="text-muted small fw-bold text-decoration-none">Already enrolled? Back to Dashboard</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let selectedCourses = [];
+
+  function toggleCourse(card, courseName) {
+    card.classList.toggle('selected');
+
+    if (selectedCourses.includes(courseName)) {
+      selectedCourses = selectedCourses.filter(item => item !== courseName);
+    } else {
+      selectedCourses.push(courseName);
+    }
+
+    document.getElementById('selCount').innerText = selectedCourses.length + " Courses Selected";
+    document.getElementById('enrollBtn').disabled = selectedCourses.length === 0;
+  }
+
+  function submitEnrolment() {
+    sessionStorage.setItem('selectedCourses', JSON.stringify(selectedCourses));
+    alert("Enrollment Successful!");
+    window.location.href = "dashboard.html";
+  }
+</script>
+
+</body>
+</html>

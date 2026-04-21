@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - Auth</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root { 
+      --dark-blue: #0d0f1a; 
+      --accent: #e8471d; 
+      --paper: #f5f3ee; 
+    }
+
+    body {
+      background-color: var(--paper);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVIGATION */
+    .sp-nav {
+      background-color: var(--dark-blue);
+      border-bottom: 4px solid var(--accent);
+      padding: 1rem 2rem;
+    }
+
+    /* MAIN CONTAINER */
+    .auth-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: white;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      min-height: 550px;
+    }
+
+    .auth-info {
+      background-color: var(--dark-blue);
+      color: white;
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .auth-form-area {
+      flex: 1.2;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-control {
+      border-radius: 0;
+      border: 2px solid #eee;
+      padding: 12px;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent);
+      box-shadow: none;
+    }
+
+    .btn-auth {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 15px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .hidden { display: none; }
+    .toggle-link { color: var(--accent); cursor: pointer; font-weight: bold; text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .auth-card { flex-direction: column; }
+      .auth-info { padding: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sp-nav">
+    <div class="container">
+        <a href="index.html" class="text-white fw-bold text-decoration-none">STUDENT<span style="color:var(--accent)">PORTAL</span></a>
+    </div>
+  </nav>
+
+  <div class="auth-container">
+    <div class="auth-card">
+      
+      <div class="auth-info">
+        <p style="color: var(--accent); font-weight: bold; letter-spacing: 2px;">UNIVERSITY OF WAH</p>
+        <h1 class="display-5 fw-bold" id="infoTitle">Join the <br><span style="color:#f5c842">Portal</span> Today.</h1>
+        <p class="text-secondary mt-3" id="infoSub">Create your account to manage courses and track your progress in real-time.</p>
+      </div>
+
+      <div class="auth-form-area">
+        
+        <div id="registerSection">
+          <h2 class="fw-bold mb-1">Create Account</h2>
+          <p class="text-muted mb-4 small">Please fill in your details.</p>
+          <form id="regForm">
+            <div class="mb-3">
+              <label class="fw-bold small">FULL NAME</label>
+              <input type="text" id="regName" class="form-control" required placeholder="Rubaiqa">
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold small">EMAIL ADDRESS</label>
+              <input type="email" id="regEmail" class="form-control" required placeholder="student@uow.edu.pk">
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold small">PASSWORD</label>
+              <input type="password" id="regPass" class="form-control" required placeholder="Create Password">
+            </div>
+            <button type="submit" class="btn-auth">REGISTER NOW</button>
+            <p class="mt-4 text-center small">Already have an account? <span class="toggle-link" onclick="toggleAuth('login')">Login here</span></p>
+          </form>
+        </div>
+
+        <div id="loginSection" class="hidden">
+          <h2 class="fw-bold mb-1">Welcome Back</h2>
+          <p class="text-muted mb-4 small">Enter your credentials to login.</p>
+          <form id="loginForm">
+            <div class="mb-3">
+              <label class="fw-bold small">EMAIL ADDRESS</label>
+              <input type="email" id="logEmail" class="form-control" required placeholder="uw-23-cy-bs-020@student.uow.edu.pk">
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold small">PASSWORD</label>
+              <input type="password" id="logPass" class="form-control" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-auth">LOGIN TO DASHBOARD</button>
+            <p class="mt-4 text-center small">Don't have an account? <span class="toggle-link" onclick="toggleAuth('register')">Register here</span></p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Logic
+    function toggleAuth(mode) {
+      const reg = document.getElementById('registerSection');
+      const log = document.getElementById('loginSection');
+      const title = document.getElementById('infoTitle');
+      const sub = document.getElementById('infoSub');
+
+      if (mode === 'login') {
+        reg.classList.add('hidden');
+        log.classList.remove('hidden');
+        title.innerHTML = "Access Your <br><span style='color:#f5c842'>Dashboard</span>.";
+        sub.innerText = "Log in to view your enrolled courses and profile updates.";
+      } else {
+        log.classList.add('hidden');
+        reg.classList.remove('hidden');
+        title.innerHTML = "Join the <br><span style='color:#f5c842'>Portal</span> Today.";
+        sub.innerText = "Create your account to manage courses and track your progress in real-time.";
+      }
+    }
+
+    // Handle Registration
+    document.getElementById('regForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const pass = document.getElementById('regPass').value;
+      
+      // Store all 3 pieces of info
+      sessionStorage.setItem('storedName', name);
+      sessionStorage.setItem('storedEmail', email);
+      sessionStorage.setItem('storedPass', pass);
+      
+      alert("Registration Successful! Now please login.");
+      toggleAuth('login');
+    });
+
+    // Handle Login (Email & Password Check)
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const sEmail = sessionStorage.getItem('storedEmail');
+      const sPass = sessionStorage.getItem('storedPass');
+      
+      const iEmail = document.getElementById('logEmail').value;
+      const iPass = document.getElementById('logPass').value;
+
+      // Validation logic
+      if (iEmail === sEmail && iPass === sPass) {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Login Failed! Please check your email or password.");
+      }
+    });
+  </script>
+
+</body>
+</html>
